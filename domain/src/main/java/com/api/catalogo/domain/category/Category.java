@@ -1,9 +1,9 @@
 package com.api.catalogo.domain.category;
 
 import com.api.catalogo.domain.AggregateRoot;
+import com.api.catalogo.domain.validation.ValidationHandler;
 
 import java.time.Instant;
-import java.util.UUID;
 
 public class Category extends AggregateRoot<CategoryID> {
 
@@ -30,6 +30,11 @@ public class Category extends AggregateRoot<CategoryID> {
         this.createdAt = aCreatedAt;
         this.updateAt = aUpdateAt;
         this.deletedAt = aDeletedAt;
+    }
+
+    @Override
+    public void validate(final ValidationHandler handler) {
+        new CategoryValidator(this, handler).validate();
     }
 
     public CategoryID getId() {
