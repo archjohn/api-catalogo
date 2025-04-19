@@ -8,8 +8,8 @@ public class CategoryTest {
     @Test
     public void givenAValidParams_whenCallNewCategory_thenInstantiateACategory() {
         final var expectedName = "a Name";
-        final var expectedDescription =  "a some description";
-        final var expectedIsActive =  "a some description";
+        final var expectedDescription = "a some description";
+        final var expectedIsActive = true;
 
 
         final var actualCategory = Category.newCategory(expectedName, expectedDescription, expectedIsActive);
@@ -21,7 +21,7 @@ public class CategoryTest {
         Assertions.assertEquals(expectedIsActive, actualCategory.isActive());
 
         Assertions.assertNotNull(actualCategory.getCreatedAt());
-        Assertions.assertNotNull(actualCategory.getUpdatedAt());
+        Assertions.assertNotNull(actualCategory.getUpdateAt());
         Assertions.assertNull(actualCategory.getDeletedAt());
 
     }
