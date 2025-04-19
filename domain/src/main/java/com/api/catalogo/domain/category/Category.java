@@ -1,32 +1,40 @@
 package com.api.catalogo.domain.category;
 
+import com.api.catalogo.domain.AggregateRoot;
+
 import java.time.Instant;
+import java.util.UUID;
 
-public class Category {
+public class Category extends AggregateRoot<CategoryID> {
 
-    private String name;
-    private String description;
-    private boolean IsActive;
-    private Instant createdAt;
-    private Instant updateAt;
-    private  Instant deletedAt;
+    private final String name;
+    private final String description;
+    private final boolean isActive;
+    private final Instant createdAt;
+    private final Instant updateAt;
+    private final Instant deletedAt;
 
     public Category(
-        String name,
-        String description,
-        boolean isActive,
-        Instant createdAt,
-        Instant updateAt,
-        Instant deletedAt
+        final CategoryID anId,
+        final String aName,
+        final String aDescription,
+        final boolean isActive,
+        final Instant aCreatedAt,
+        final Instant aUpdateAt,
+        final Instant aDeletedAt
     ) {
-        this.name = name;
-        this.description = description;
-        IsActive = isActive;
-        this.createdAt = createdAt;
-        this.updateAt = updateAt;
-        this.deletedAt = deletedAt;
+        super(anId);
+        this.name = aName;
+        this.description = aDescription;
+        this.isActive = isActive;
+        this.createdAt = aCreatedAt;
+        this.updateAt = aUpdateAt;
+        this.deletedAt = aDeletedAt;
     }
 
+    public CategoryID getId() {
+        return id;
+    }
     public String getDescription() {
         return description;
     }
@@ -36,7 +44,7 @@ public class Category {
     }
 
     public boolean isActive() {
-        return IsActive;
+        return isActive;
     }
 
     public Instant getCreatedAt() {
@@ -49,5 +57,11 @@ public class Category {
 
     public Instant getDeletedAt() {
         return deletedAt;
+    }
+
+    public static Category newCategory(final String aName, final String aDescription, final boolean isActive) {
+        final var id = CategoryID.unique();
+        final var now = Instant.now();
+        return new Category(id, aName, aDescription, isActive, now, now, null);
     }
 }
