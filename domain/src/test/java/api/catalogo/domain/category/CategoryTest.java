@@ -153,6 +153,31 @@ public class CategoryTest {
 
     }
 
+    @Test
+    public void givenAValidCategory_whenCallDeactivate_thenReturnCategoryInactivated() {
+        final var expectedName = "a Name";
+        final var expectedDescription = "a some description";
+        final var expectedIsActive = false;
 
+        final var aCategory = Category.newCategory(expectedName, expectedDescription, true);
+
+        final var updatedAt = aCategory.getUpdateAt();
+
+        Assertions.assertTrue(aCategory.isActive());
+        Assertions.assertNull(aCategory.getDeletedAt());
+
+         final var actualCategory = aCategory.deactivate();
+
+         Assertions.assertDoesNotThrow(() -> actualCategory.validate(new ThrowsValidationHandler()));
+
+         Assertions.assertEquals(aCategory.getId(), actualCategory.getId());
+         Assertions.assertEquals(expectedName, actualCategory.getName());
+         Assertions.assertEquals(expectedDescription, actualCategory.getDescription());
+         Assertions.assertEquals(expectedIsActive, actualCategory.isActive());
+         Assertions.assertNotNull(actualCategory.getCreatedAt());
+         Assertions.assertTrue(actualCategory.getUpdatedAt().isAfter(updatedAt));
+         Assertions.assertNotNull(actualCategory.getDeletedAt());
+
+    }
 
 }
